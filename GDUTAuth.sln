@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "GDUTAuth", "GDUTAuth.fsproj", "{0E3BAC9A-DC9E-4ED4-8D49-C20AECD60651}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "GDUTAuthCLI", "GDUTAuthCLI\GDUTAuthCLI.fsproj", "{6515B928-81FB-47DA-B402-8512868D5D13}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E3BAC9A-DC9E-4ED4-8D49-C20AECD60651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E3BAC9A-DC9E-4ED4-8D49-C20AECD60651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E3BAC9A-DC9E-4ED4-8D49-C20AECD60651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E3BAC9A-DC9E-4ED4-8D49-C20AECD60651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6515B928-81FB-47DA-B402-8512868D5D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6515B928-81FB-47DA-B402-8512868D5D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6515B928-81FB-47DA-B402-8512868D5D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6515B928-81FB-47DA-B402-8512868D5D13}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
