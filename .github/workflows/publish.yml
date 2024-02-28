@@ -28,7 +28,7 @@ jobs:
         run: dotnet pack --configuration Release --output nupkgs
 
       - name: Add Github NuGet Repository
-        run: dotnet nuget add source --username USERNAME --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/NAMESPACE/index.json"
+        run: dotnet nuget add source --username ${{ secrets.USERNAME }} --password ${{ secrets.TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/NAMESPACE/index.json"
 
       - name: Publish NuGet package
         run: dotnet nuget push nupkgs/GDUTAuth.*.nupkg --source github
