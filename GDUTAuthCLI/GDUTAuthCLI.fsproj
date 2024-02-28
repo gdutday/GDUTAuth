@@ -4,6 +4,8 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <AssemblyName>GDUTAuth.CLI</AssemblyName>
+        <RootNamespace>GDUTAuth.CLI</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

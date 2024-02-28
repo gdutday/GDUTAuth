@@ -1,6 +1,6 @@
 ﻿open System
 open GDUTAuth.Ehall
-open GDUTAuthCLI
+open GDUTAuth.CLI
 open Utils
 
 let exitApplication code message =

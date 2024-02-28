@@ -1,4 +1,4 @@
-module GDUTAuthCLI.Utils
+module GDUTAuth.CLI.Utils
 
 open System
 
