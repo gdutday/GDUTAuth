@@ -8,6 +8,7 @@
     <ItemGroup>
         <Compile Include="EhallCrypto.fs" />
         <Compile Include="GDUTCrypto.fs" />
+        <Compile Include="Utils.fs" />
         <Compile Include="Ehall.fs" />
     </ItemGroup>
 

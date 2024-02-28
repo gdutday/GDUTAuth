@@ -7,10 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Program.fs"/>
-    </ItemGroup>
-
-    <ItemGroup>
+      <Compile Include="Utils.fs" />
+      <Compile Include="Program.fs" />
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
@@ -19,6 +17,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\GDUTAuth.fsproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="TextCopy" Version="6.2.1" />
     </ItemGroup>
 
 </Project>

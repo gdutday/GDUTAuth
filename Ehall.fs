@@ -66,7 +66,7 @@ let isNeedCaptcha username timestamp =
 let login username password (timestampProvider: _ -> int64) =
     let underGraduateLoginPath = "/authserver/login"
 
-    let jwgiOssLoginUri = Uri("http://jxfw.gdut.edu.cn/new/ssoLogin")
+    let jwfwOssLoginUri = Uri("http://jxfw.gdut.edu.cn/new/ssoLogin")
 
     let underGraduateLoginUri =
         let builder = uriBuilder ()
@@ -122,7 +122,7 @@ let login username password (timestampProvider: _ -> int64) =
 
         use client = new HttpClient(handler)
 
-        let! page = getPage client jwgiOssLoginUri
+        let! page = getPage client jwfwOssLoginUri
         let doc = page |> Result.bind getDocument
         let nodes = doc |> Result.bind getHiddenNodes
 
@@ -138,7 +138,40 @@ let login username password (timestampProvider: _ -> int64) =
             let! response = client.PostAsync(underGraduateLoginUri, requestBody) |> Async.AwaitTask
 
             match response.StatusCode with
-            | HttpStatusCode.OK -> return Ok (String.Join("; ", (cookieContainer.GetAllCookies() |> Seq.map (fun c -> $"{c.Name}={c.Value}"))))
+            | HttpStatusCode.OK -> return Ok <| cookieContainer.GetAllCookies()
             | HttpStatusCode.Unauthorized -> return Error "用户名或密码错误"
-            | _ ->  return Error "未知错误"
+            | _ -> return Error "未知错误"
     }
+
+let isLogin (cookies: CookieCollection) =
+    let jxfwHost = "jxfw.gdut.edu.cn"
+
+    let checkResponseIsOk (response: HttpResponseMessage) =
+        match response.IsSuccessStatusCode with
+        | true -> Ok response
+        | _ -> Error "请求失败"
+
+    let checkResponseIsAuthorized (response: HttpResponseMessage) =
+        let host = response.RequestMessage.RequestUri.Host
+
+        match host with
+        | _ when host = jxfwHost -> Ok true
+        | _ -> Ok false
+
+
+    let uri = Uri $"http://{jxfwHost}/"
+    let cookieContainer = CookieContainer()
+    cookies |> Seq.iter cookieContainer.Add
+
+    let handler =
+        new HttpClientHandler(CookieContainer = cookieContainer, AllowAutoRedirect = true)
+
+    use client = new HttpClient(handler)
+
+    let response =
+        getResponse client uri
+        |> Async.RunSynchronously
+        |> Result.bind checkResponseIsOk
+
+    let isAuthorized = response |> Result.bind checkResponseIsAuthorized
+    isAuthorized

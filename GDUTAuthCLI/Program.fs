@@ -1,11 +1,7 @@
 ﻿open System
 open GDUTAuth.Ehall
-
-let consoleWithColor color f =
-    let originalColor = Console.ForegroundColor
-    Console.ForegroundColor <- color
-    f ()
-    Console.ForegroundColor <- originalColor
+open GDUTAuthCLI
+open Utils
 
 let exitApplication code message =
     consoleWithColor ConsoleColor.Red (fun _ ->
@@ -78,18 +74,42 @@ let needCapture () =
 let login () =
     let username = inputValueOf "学号"
     let password = inputSecureValueOf "密码"
-    let page = login username password getTimeStamp |> Async.RunSynchronously
+    let cookies = login username password getTimeStamp |> Async.RunSynchronously
 
-    match page with
-    | Ok resultValue ->
-        consoleWithColor ConsoleColor.Green (fun _ -> printfn $"""Cookies:{"\n"}{resultValue.Replace("; ", "\n")}""")
+    match cookies with
     | Error errorValue -> consoleWithColor ConsoleColor.Red (fun _ -> printfn $"发生错误: {errorValue}")
+    | Ok resultValue ->
+        let cookiesString = resultValue |> GDUTAuth.Utils.CookiesCollectionToString
+
+        consoleWithColor ConsoleColor.Green (fun _ ->
+            printfn $"""Cookies:{"\n"}{cookiesString |> (fun s -> s.Replace("; ", "\n"))}""")
+
+        AskToCopy "Cookies" cookiesString
+
+        match isLogin resultValue with
+        | Error errorValue -> consoleWithColor ConsoleColor.Red (fun _ -> printfn $"发生错误: {errorValue}")
+        | Ok resultValue ->
+            consoleWithColor
+            <| (if resultValue then ConsoleColor.Green else ConsoleColor.Red)
+            <| (fun _ -> printfn $"已登录: {resultValue}")
+
+let checkIsLogin () =
+    let cookies = inputValueOf "Cookies"
+    let result = isLogin <| GDUTAuth.Utils.StringToCookieCollection(cookies)
+
+    match result with
+    | Error errorValue -> consoleWithColor ConsoleColor.Red (fun _ -> printfn $"发生错误: {errorValue}")
+    | Ok resultValue ->
+        consoleWithColor
+        <| (if resultValue then ConsoleColor.Green else ConsoleColor.Red)
+        <| (fun _ -> printfn $"已登录: {resultValue}")
 
 let rec main () =
     let choice =
         [ ("退出", (fun _ -> exitApplication 0 None))
           ("检验是否需要验证码", needCapture)
-          ("登录", login) ]
+          ("登录", login)
+          ("确认Cookies是否有效", checkIsLogin) ]
 
     choice |> List.iteri (fun i (name, _) -> printfn $"{i}.{name}")
     let input = inputValueOf "选项" |> Int32.TryParse
