@@ -1,4 +1,4 @@
-module GDUTAuth.Ehall
+module GDUT.Auth.Ehall
 
 open HtmlAgilityPack
 open System

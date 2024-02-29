@@ -1,4 +1,4 @@
-module GDUTAuth.GDUTCrypto
+module GDUT.Auth.GDUTCrypto
 
 open System
 open System.Text

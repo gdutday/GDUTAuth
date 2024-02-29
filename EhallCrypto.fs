@@ -1,4 +1,4 @@
-module GDUTAuth.EhallCrypto
+module GDUT.Auth.EhallCrypto
 
 open System
 open System.Security.Cryptography

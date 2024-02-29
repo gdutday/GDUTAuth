@@ -1,4 +1,4 @@
-module GDUTAuth.Utils
+module GDUT.Auth.Utils
 
 open System
 open System.Net

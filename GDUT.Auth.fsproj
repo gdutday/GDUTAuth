@@ -5,6 +5,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>GDUT.Auth</AssemblyName>
         <RootNamespace>GDUT.Auth</RootNamespace>
+        <Version>0.1.0</Version>
     </PropertyGroup>
 
     <ItemGroup>
