@@ -4,8 +4,8 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <AssemblyName>GDUTAuth.CLI</AssemblyName>
-        <RootNamespace>GDUTAuth.CLI</RootNamespace>
+        <AssemblyName>GDUT.Auth.CLI</AssemblyName>
+        <RootNamespace>GDUT.Auth.CLI</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\GDUTAuth.fsproj" />
+      <ProjectReference Include="..\GDUT.Auth.fsproj" />
     </ItemGroup>
 
     <ItemGroup>

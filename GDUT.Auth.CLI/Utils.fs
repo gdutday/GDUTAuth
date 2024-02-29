@@ -1,7 +1,21 @@
-﻿open System
-open GDUTAuth.Ehall
-open GDUTAuth.CLI
-open Utils
+module GDUTAuth.CLI.Utils
+
+open System
+
+let consoleWithColor color f =
+    let originalColor = Console.ForegroundColor
+    Console.ForegroundColor <- color
+    f ()
+    Console.ForegroundColor <- originalColor
+
+let AskToCopy name content =
+    printfn $"是否复制{name}？ [Y]es"
+    let input = Console.ReadLine()
+    match input with
+    | _ when input.Trim().ToLower().StartsWith('y') ->
+        TextCopy.ClipboardService.SetText(content)
+        consoleWithColor ConsoleColor.Green (fun _ -> printfn $"{name}已复制！")
+    | _ -> ()
 
 let exitApplication code message =
     consoleWithColor ConsoleColor.Red (fun _ ->
@@ -103,25 +117,3 @@ let checkIsLogin () =
         consoleWithColor
         <| (if resultValue then ConsoleColor.Green else ConsoleColor.Red)
         <| (fun _ -> printfn $"已登录: {resultValue}")
-
-let rec main () =
-    let choice =
-        [ ("退出", (fun _ -> exitApplication 0 None))
-          ("检验是否需要验证码", needCapture)
-          ("登录", login)
-          ("确认Cookies是否有效", checkIsLogin) ]
-
-    choice |> List.iteri (fun i (name, _) -> printfn $"{i}.{name}")
-    let input = inputValueOf "选项" |> Int32.TryParse
-    printfn ""
-
-    match input with
-    | true, index when index >= 0 && index < choice.Length ->
-        let _, f = choice[index]
-        f ()
-        printfn ""
-    | _ -> consoleWithColor ConsoleColor.Red (fun _ -> printfn "无效的选项")
-
-    main ()
-
-main ()
